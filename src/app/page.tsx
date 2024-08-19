@@ -5,9 +5,11 @@ import { Item } from "./types";
 
 export default function Home() {
   const [data, setData] = useState<Item[]>([])
+  const [filteredData, setFilteredData] = useState<Item[]>([])
   const [error, setError] = useState<string | null>(null)
   const router = useRouter();
   const scrollRef = useRef<HTMLDivElement>(null);
+  const [search, setSearch] = useState<string>('');
 
   useEffect(() => {
     const el = scrollRef.current;
@@ -69,6 +71,7 @@ export default function Home() {
 
         const data = await response.json();
         setData(data);
+        setFilteredData(data);
         console.log(data)
       } catch (error) {
         setError('Error fetching data');
@@ -87,6 +90,18 @@ export default function Home() {
     router.push('/create-item');
   };
 
+  const handleSearch = (search: string) => {
+    setSearch(search);
+    if (search === '') {
+      return;
+    }
+    const filteredData = data.filter((item) => {
+      console.log(item.name.toLowerCase().includes(search.toLowerCase()));
+      return [item.name.toLowerCase().includes(search.toLowerCase()), item.description.toLowerCase().includes(search.toLowerCase())].some((value) => value);
+    });
+    setFilteredData(filteredData);
+  }
+
   return (
     <>
       <div className="flex flex-row my-2 justify-between text-white items-center">
@@ -99,10 +114,10 @@ export default function Home() {
         </div>
       </div>
       <div className="flex ">
-        <input type="text" placeholder="Search.." className="p-2 my-5 outline-none border-gray-600/10 border rounded-xl w-full px-5 bg-gray-800/20 text-white placeholder:text-[#f5f5f5]" />
+        <input type="text" value={search} onChange={(e)=>{handleSearch(e.target.value)}} placeholder="Search.." className="p-2 my-5 outline-none border-gray-600/10 border rounded-xl w-full px-5 bg-gray-800/20 text-white placeholder:text-[#f5f5f5]" />
       </div>
       <div ref={scrollRef} className="flex gap-4 p-4 text-white no-scrollbar cursor-grab  active:cursor-grabbing overflow-x-scroll bg-gray-50/5 bg-opacity-50 backdrop-blur-3xl rounded-3xl">
-        {data.map((item) => (
+        {filteredData.map((item) => (
           <div key={item.id} className="flex-shrink-0 w-52 h-full" onClick={() => { handleItemdetail(item.id) }}>
             <div className="space-y-1 backdrop-brightness-95 hover:bg-gray-600/20 border-gray-400/50 border p-4 rounded-3xl overflow-hidden my-4 select-none">
               <div className="h-36 w-full bg-gray-300 rounded-3xl mb-4 overflow-hidden">
