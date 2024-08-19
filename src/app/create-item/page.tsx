@@ -1,7 +1,7 @@
 'use client'
 import React, { useState } from 'react'
 
-export default function createItem() {
+export default function CreateItem() {
   const [message, setMessage]  = useState<[string, string]>(['', '']);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
