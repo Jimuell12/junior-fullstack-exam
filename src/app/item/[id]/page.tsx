@@ -1,6 +1,7 @@
 'use client'
 import React, { useEffect, useState } from 'react'
 import { Item, ItemDetailsProps } from '../../types'
+import { useRouter } from 'next/navigation';
 
 export default function ItemDetails({ params }: ItemDetailsProps) {
     const [data, setData] = useState<Item | null>(null);
@@ -9,6 +10,8 @@ export default function ItemDetails({ params }: ItemDetailsProps) {
     const [description, setDescription] = useState(data?.description || '');
     const [image, setImage] = useState(data?.image || '');
     const [error, setError] = useState<string | null>(null);
+    const [message, setMessage] = useState<[string, string]>(['', '']);
+    const route = useRouter();
 
     useEffect(() => {
         const handleItem = async () => {
@@ -54,14 +57,13 @@ export default function ItemDetails({ params }: ItemDetailsProps) {
             body: JSON.stringify(item)
         });
 
-        if (response.ok) {
-            alert('Item updated successfully');
-        } else {
-            alert('An error occurred');
-        }
+        const res = await response.json();
 
-        const data = await response.json();
-        console.log(data);
+        if (response.status === 200) {
+            setMessage(['success', res.message]);
+        } else {
+            setMessage(['error', res.message]);
+        }
     }
 
     const handleDelete = async () => {
@@ -69,10 +71,14 @@ export default function ItemDetails({ params }: ItemDetailsProps) {
             method: 'DELETE'
         });
 
-        if (response.ok) {
-            alert('Item deleted successfully');
+        const res = await response.json();
+
+        if (response.status === 200) {
+            setMessage(['success', res.message]);
+
+            route.push('/');
         } else {
-            alert('An error occurred');
+            setMessage(['error', "An error occurred"]);
         }
     }
 
@@ -137,7 +143,14 @@ export default function ItemDetails({ params }: ItemDetailsProps) {
                             />
                         </div>
                     </div>
-                    <div className="flex justify-end mt-4">
+                    <div className="flex justify-end mt-4 items-center">
+                        <p>
+                            {message[0] === 'success' ? (
+                                <span className="text-green-500">{message[1]}</span>
+                            ) : message[0] === 'error' ? (
+                                <span className="text-red-500">{message[1]}</span>
+                            ) : message[1]}
+                        </p>
                         <button
                             type="button"
                             onClick={handleUpdate}

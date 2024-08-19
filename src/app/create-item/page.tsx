@@ -1,7 +1,8 @@
 'use client'
-import React from 'react'
+import React, { useState } from 'react'
 
 export default function createItem() {
+  const [message, setMessage]  = useState<[string, string]>(['', '']);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -25,16 +26,16 @@ export default function createItem() {
       body: JSON.stringify(item)
     });
 
-    if (response.ok) {
-      alert('Item created successfully');
+    const res = await response.json();
+
+    if (response.status === 200) {
+      setMessage(['success', res.message]);
     } else {
-      alert('An error occurred');
+      setMessage(['error', res.message]);
     }
 
-    const data = await response.json();
-    console.log(data);
-
   }
+  
   return (
     <div>
       <div className="flex flex-row py-2 justify-between text-white items-center">
@@ -64,6 +65,7 @@ export default function createItem() {
               <input
                 type="number"
                 id="price"
+                min={1}
                 name="price"
                 placeholder='Price'
                 className="p-3 outline-none border-gray-600/10 border rounded-xl w-full bg-gray-800/20 text-white placeholder:text-[#f5f5f5]"
@@ -74,6 +76,7 @@ export default function createItem() {
               <textarea
                 id="description"
                 name="description"
+                rows={3}
                 placeholder='Description'
                 className="p-3 outline-none border-gray-600/10 border rounded-xl w-full bg-gray-800/20 text-white placeholder:text-[#f5f5f5]"
               ></textarea>
@@ -89,7 +92,14 @@ export default function createItem() {
               />
             </div>
           </div>
-          <div className="flex justify-end mt-4">
+          <div className="flex justify-end mt-4 items-center">
+            <p>
+              {message[0] === 'success' ? (
+                <span className="text-green-500">{message[1]}</span>
+              ) : message[0] === 'error' ? (
+                <span className="text-red-500">{message[1]}</span>
+              ) : message[1]}
+            </p>
             <button
               type="submit"
               className="p-3 bg-gray-600/20 rounded-xl px-6 text-white hover:bg-gray-600/30 transition-colors duration-200"
