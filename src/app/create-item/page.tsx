@@ -1,5 +1,6 @@
 'use client'
 import React, { useState } from 'react'
+import { Header } from '../components/Header';
 
 export default function CreateItem() {
   const [message, setMessage]  = useState<[string, string]>(['', '']);
@@ -38,16 +39,8 @@ export default function CreateItem() {
   }
   
   return (
-    <div>
-      <div className="flex flex-row py-2 justify-between text-white items-center">
-        <h1><strong>Create Item</strong></h1>
-        <div className="p-1 rounded-full bg-gray-600/10 cursor-pointer">
-          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-6 h-6">
-            <path strokeLinecap="round" strokeLinejoin="round" d="m11.25 11.25.041-.02a.75.75 0 0 1 1.063.852l-.708 2.836a.75.75 0 0 0 1.063.853l.041-.021M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9-3.75h.008v.008H12V8.25Z" />
-          </svg>
-
-        </div>
-      </div>
+    <>
+      <Header title="Create New Item" tooltip="Add new in the list" />
       <div className="flex gap-4 p-4 text-white overflow-x-scroll no-scrollbar bg-gray-50/5 bg-opacity-50 backdrop-blur-3xl rounded-3xl">
         <form onSubmit={handleSubmit} className="w-full">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -111,6 +104,6 @@ export default function CreateItem() {
         </form>
       </div>
 
-    </div>
+    </>
   )
 }
