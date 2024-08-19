@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react'
 import { Item, ItemDetailsProps } from '../../types'
 
 export default function ItemDetails({ params }: ItemDetailsProps) {
-    const [data, setData] = useState<Item | null>(null);  // Single item, so use `Item | null`
+    const [data, setData] = useState<Item | null>(null);
     const [name, setName] = useState(data?.name || '');
     const [price, setPrice] = useState(data?.price || '');
     const [description, setDescription] = useState(data?.description || '');
@@ -158,19 +158,4 @@ export default function ItemDetails({ params }: ItemDetailsProps) {
 
         </div>
     )
-}
-
-export async function generateStaticParams() {
-    try {
-        const response = await fetch('https://jfsdexam.pythonanywhere.com/api/items');
-        const items = await response.json();
-
-
-        return items.map((item : Item) => ({
-            id: item.id.toString() 
-        }));
-    } catch (error) {
-        console.error('Failed to fetch items for static generation', error);
-        return [];
-    }
 }
