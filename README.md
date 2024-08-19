@@ -32,3 +32,19 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 | 10. Delete Item - Invalid ID         | DELETE     | `/api/items/999` | None                                                                           | `{"message": "Item deleted successfully"}` (even though the item doesn't exist)  | 200             |
 
 ## Front-end Test Cases
+## Test Cases for CreateItem Component
+
+| **Test Case**                     | **Description**                                                        | **Expected Result**                                                  | **Actual Result**                        | **Status** |
+|----------------------------------|------------------------------------------------------------------------|-----------------------------------------------------------------------|------------------------------------------|------------|
+| **Render Component**              | Ensure the `CreateItem` component is displayed correctly.                | The component should be visible with all input fields and the Create button. | Passed                                   | Pass       |
+| **Check Initial Render**          | Verify the presence of input fields and the Create button.               | Input fields for Name, Price, Description, and Image URL, and the Create button should be visible. | Passed                                   | Pass       |
+| **Test Name Input**               | Enter a valid name (e.g., "Test Item").                                 | The input field should accept and display the entered value.           | Passed                                   | Pass       |
+| **Test Price Input**              | Enter a valid number (e.g., 100).                                       | The input field should accept and display the entered number.          | Passed                                   | Pass       |
+| **Test Description Input**        | Enter a valid description (e.g., "This is a test item").               | The textarea should accept and display the entered description.       | Passed                                   | Pass       |
+| **Test Image URL Input**          | Enter a valid image URL (e.g., "https://example.com/image.jpg").        | The input field should accept and display the entered URL.             | Passed                                   | Pass       |
+| **Submit Form**                   | Click the Create button after entering valid data.                     | A network request should be made to the API endpoint.                  | Passed                                   | Pass       |
+| **Check Network Request**         | Verify the request payload and response in the browser’s developer tools. | The request payload should match the form data, and the response should be checked. | Passed                                   | Pass       |
+| **Check Success Message**         | Verify that a success message is displayed for a successful response.  | The message should indicate success (e.g., "Item created successfully"). | Passed                                   | Pass       |
+| **Check Error Message**           | Verify that an error message is displayed for an unsuccessful response. | The message should indicate an error (e.g., "Error creating item").     | Passed                                   | Pass       |
+| **Test Empty Fields**             | Submit the form with one or more fields left empty.                    | The form should handle missing values and show appropriate validation messages. | Passed                                   | Pass       |
+| **Test Invalid Image URL**        | Enter an invalid image URL and submit the form.                         | The form should handle the invalid URL and show appropriate error messages or handle it gracefully. | Passed                                   | Pass       |
