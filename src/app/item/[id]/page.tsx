@@ -159,3 +159,18 @@ export default function ItemDetails({ params }: ItemDetailsProps) {
         </div>
     )
 }
+
+export async function generateStaticParams() {
+    try {
+        const response = await fetch('https://jfsdexam.pythonanywhere.com/api/items');
+        const items = await response.json();
+
+
+        return items.map((item : Item) => ({
+            id: item.id.toString() 
+        }));
+    } catch (error) {
+        console.error('Failed to fetch items for static generation', error);
+        return [];
+    }
+}
