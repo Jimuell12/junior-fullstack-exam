@@ -11,6 +11,7 @@ export default function createItem() {
     const price = formData.get('price') as string;
     const description = formData.get('description') as string;
     const image = formData.get('image') as string;
+    
     const item = {
       name,
       price,
