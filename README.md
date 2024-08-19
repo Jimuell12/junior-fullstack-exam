@@ -48,3 +48,20 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 | **Check Error Message**           | Verify that an error message is displayed for an unsuccessful response. | The message should indicate an error (e.g., "Error creating item").     | Passed                                   | Pass       |
 | **Test Empty Fields**             | Submit the form with one or more fields left empty.                    | The form should handle missing values and show appropriate validation messages. | Passed                                   | Pass       |
 | **Test Invalid Image URL**        | Enter an invalid image URL and submit the form.                         | The form should handle the invalid URL and show appropriate error messages or handle it gracefully. | Passed                                   | Pass       |
+
+## Bonus Tasks
+
+### Authentication
+- **Note:** Authentication was not implemented for this project.
+
+### Testing
+- **Type:** Manual Testing
+- **Details:** Test cases were executed manually to ensure the functionality of the `CreateItem` component, covering form inputs, submission, and validation.
+
+### Deployment
+- **Frontend (Vercel):** [https://junior-fullstack-exam.vercel.app/](https://junior-fullstack-exam.vercel.app/)
+- **Backend (PythonAnywhere):** [https://jfsdexam.pythonanywhere.com/api/items](https://jfsdexam.pythonanywhere.com/api/items)
+
+
+
+
